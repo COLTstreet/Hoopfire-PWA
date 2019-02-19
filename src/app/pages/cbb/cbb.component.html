@@ -1,0 +1,71 @@
+<app-header></app-header>
+<div id="matchup-content" class="row pt-1">
+  <div class="col-xs-12 col-md-5">
+    <mat-card id="firstTeam">
+      <div *ngIf="leftWinner" class="left-winner"><i class="material-icons">check_circle</i></div>
+      <div>
+        <ng-select [items]="cbbTeams" bindLabel="fields.team.stringValue" [loading]="dataLoading" [(ngModel)]="firstTeam"
+          (change)="onChange(1, $event)"></ng-select>
+      </div>
+      <div class="row">
+        <div class="col-2">
+          <div>
+            <div id="homeLeft" class="home-icon home-icon-color" (click)="toggleHomeCourt('left');">
+              <i class="material-icons">home</i>
+            </div>
+            <div>
+              <a style="color: #f44336;" href="https://www.cbssports.com/cbb/injuries" target="_blank"><i class="material-icons">local_hospital</i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-7 text-center">
+          <div *ngIf="firstTeam" class="team-text">{{firstTeam.fields.team.stringValue}}</div>
+        </div>
+        <div class="col-3 text-right">
+          <div *ngIf="firstTeam" class="team-text">{{leftScore}}</div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <div class="col-xs-12 col-md-2 text-center add-section">
+    <div class="d-flex justify-content-center align-items-center h-100">
+      <div>
+        <div class="">Spread: {{spread}}</div>
+        <div class="">Confidence: {{confidenceScore}}%</div>
+        <button mat-mini-fab color="primary" (click)="addMatchup('User Generated')"><i class="material-icons">add</i></button>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-5">
+    <mat-card id="secondTeam">
+      <div *ngIf="rightWinner" class="right-winner"><i class="material-icons">check_circle</i></div>
+      <div>
+        <ng-select [items]="cbbTeams" bindLabel="fields.team.stringValue" [loading]="dataLoading" [(ngModel)]="secondTeam"
+          (change)="onChange(2, $event)"></ng-select>
+      </div>
+      <div class="row">
+        <div class="col-3 text-left">
+          <div *ngIf="secondTeam" class="team-text">{{rightScore}}</div>
+        </div>
+        <div class="col-7 text-center">
+          <div *ngIf="secondTeam" class="team-text">{{secondTeam.fields.team.stringValue}}</div>
+        </div>
+        <div class="col-2 text-right">
+          <div id="homeRight" class="home-icon" (click)="toggleHomeCourt('right');">
+            <i class="material-icons">home</i>
+          </div>
+          <div>
+            <a style="color: #f44336;" href="https://www.cbssports.com/cbb/injuries" target="_blank"><i class="material-icons">local_hospital</i></a>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
+<div id="table-content" class="table-section">
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+  <button mat-raised-button color="primary" (click)="onRemoveSelected()" class="m-2">Remove Selected</button>
+  <ag-grid-angular #agGrid class="ag-theme-material ag-grid" [enableSorting]="true" [rowData]="matchups" [columnDefs]="columnDefs"
+    [rowSelection]="rowSelection" (gridReady)="onGridReady($event)">
+  </ag-grid-angular>
+</div>

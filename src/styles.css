@@ -1,1 +1,49 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@ng-select/ng-select/themes/material.theme.css";
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "~ag-grid-community/dist/styles/ag-theme-material.css";
+
+html,
+body {
+  height: 100%;
+  background: #1A1A1D;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  background: #1A1A1D !important;
+  color: white !important;
+}
+
+.row {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* OVERWRITES */
+.mat-toolbar.mat-primary {
+  background: #C3073F !important;
+  color: white !important;
+}
+
+.mat-flat-button.mat-primary,
+.mat-raised-button.mat-primary,
+.mat-fab.mat-primary,
+.mat-mini-fab.mat-primary {
+  background-color: #C3073F !important;
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: #C3073F !important;
+}
+
+.mat-tab-label .mat-tab-label-content {
+  color: white !important
+}
+
+.mat-tab-nav-bar, .mat-tab-header {
+  border-bottom: 1px solid #1a1a1d !important;
+}
