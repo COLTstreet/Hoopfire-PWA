@@ -6,12 +6,28 @@
   padding: 40px 0;
 }
 
+.bracket-footer {
+  text-align: center;
+  padding: 0 30px;
+  font-size: 12px;
+  color: #1a1a1d;
+  background: #f8f9fa;
+}
+
 .bracket-bottom {
   margin-top: -250px;
 }
 
 .mobile {
   display: none;
+}
+
+.correct {
+  color: #4CAF50 !important;
+}
+
+.incorrect {
+  color: #D32F2F !important;
 }
 
 .region {
@@ -169,6 +185,12 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   opacity: 1;
   color: #1A1A1D;
+}
+
+.team-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .vote-options {

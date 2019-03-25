@@ -142,8 +142,17 @@ export class CbbComponent implements OnInit {
       if(!this.firstHome) {
         jQuery("#homeLeft").toggleClass("home-icon-color");
         this.firstHome = true;
-        jQuery("#homeRight").toggleClass("home-icon-color");
+        if(!this.neutral) {
+          jQuery("#homeRight").toggleClass("home-icon-color");
+        }
         this.secondHome = false;
+        this.neutral = false;
+
+        this.calculateOdds();
+      } else if(this.firstHome) {
+        jQuery("#homeLeft").toggleClass("home-icon-color");
+        this.firstHome = false;
+        this.neutral = true;
 
         this.calculateOdds();
       }
@@ -151,8 +160,17 @@ export class CbbComponent implements OnInit {
       if(!this.secondHome) {
         jQuery("#homeRight").toggleClass("home-icon-color");
         this.secondHome = true;
-        jQuery("#homeLeft").toggleClass("home-icon-color");
+        if(!this.neutral) {
+          jQuery("#homeLeft").toggleClass("home-icon-color");
+        }
+        this.neutral = false;
         this.firstHome = false;
+
+        this.calculateOdds();
+      } else if(this.secondHome) {
+        jQuery("#homeRight").toggleClass("home-icon-color");
+        this.secondHome = false;
+        this.neutral = true;
 
         this.calculateOdds();
       }
@@ -178,7 +196,7 @@ export class CbbComponent implements OnInit {
     if (this.firstTeam && this.secondTeam) {
       var awayTeam, homeTeam;
       var adv = .010;
-      if (this.firstHome) {
+      if (this.firstHome || this.neutral) {
         homeTeam = this.firstTeam;
         awayTeam = this.secondTeam;
       } else if (this.secondHome) {
@@ -226,7 +244,7 @@ export class CbbComponent implements OnInit {
         this.confidenceScore = this.awayWinChance;
       }
 
-      if (this.firstHome) {
+      if (this.firstHome || this.neutral) {
         this.leftScore = this.homeScore;
         this.rightScore = this.awayScore;
         if (homeScoreDecimal > awayScoreDecimal) {
