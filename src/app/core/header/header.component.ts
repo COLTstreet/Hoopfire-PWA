@@ -14,6 +14,8 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     if(window.location.pathname === "/cbb") {
       this.page = "ncaa";
+    } else if(window.location.pathname === "/wcbb") {
+      this.page = "ncaa";
     } else if(window.location.pathname === "/cbb-bracket") {
       this.page = "final-four";
     }

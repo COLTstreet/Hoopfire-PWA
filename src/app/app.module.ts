@@ -18,6 +18,7 @@ import { environment } from '../environments/environment';
 import { CbbComponent } from './pages/cbb/cbb.component';
 import { HeaderComponent } from './core/header/header.component';
 import { CbbBracketComponent } from './pages/cbb-bracket/cbb-bracket.component';
+import { WcbbComponent } from './pages/wcbb/wcbb.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { CbbBracketComponent } from './pages/cbb-bracket/cbb-bracket.component';
     NbaComponent,
     CbbComponent,
     HeaderComponent,
-    CbbBracketComponent
+    CbbBracketComponent,
+    WcbbComponent
   ],
   imports: [
     BrowserModule,
