@@ -5,8 +5,8 @@
       <img *ngIf="firstTeam" class="first-logo" src="/assets/images/{{firstTeam.fields.team.stringValue}}.png" />
       <div *ngIf="leftWinner" class="left-winner"><i class="material-icons">check_circle</i></div>
       <div>
-        <ng-select [items]="nbaTeams" bindLabel="fields.team.stringValue" [loading]="dataLoading" [(ngModel)]="firstTeam"
-          (change)="onChange(1, $event)"></ng-select>
+        <ng-select [items]="nbaTeams" bindLabel="fields.team.stringValue" [loading]="dataLoading"
+          [(ngModel)]="firstTeam" (change)="onChange(1, $event)"></ng-select>
       </div>
       <div class="row">
         <div class="col-2">
@@ -15,7 +15,8 @@
               <i class="material-icons">home</i>
             </div>
             <div>
-              <a style="color: #f44336;" href="https://www.cbssports.com/nba/injuries" target="_blank"><i class="material-icons">local_hospital</i></a>
+              <a style="color: #f44336;" href="https://www.cbssports.com/nba/injuries" target="_blank"><i
+                  class="material-icons">local_hospital</i></a>
             </div>
           </div>
         </div>
@@ -33,7 +34,8 @@
       <div>
         <div class="">Spread: {{spread}}</div>
         <div class="">Confidence: {{confidenceScore}}%</div>
-        <button mat-mini-fab color="primary" (click)="addMatchup('User Generated')"><i class="material-icons">add</i></button>
+        <button mat-mini-fab color="primary" (click)="addMatchup('User Generated')"><i
+            class="material-icons">add</i></button>
       </div>
     </div>
   </div>
@@ -42,8 +44,8 @@
       <img *ngIf="secondTeam" class="second-logo" src="/assets/images/{{secondTeam.fields.team.stringValue}}.png" />
       <div *ngIf="rightWinner" class="right-winner"><i class="material-icons">check_circle</i></div>
       <div>
-        <ng-select [items]="nbaTeams" bindLabel="fields.team.stringValue" [loading]="dataLoading" [(ngModel)]="secondTeam"
-          (change)="onChange(2, $event)"></ng-select>
+        <ng-select [items]="nbaTeams" bindLabel="fields.team.stringValue" [loading]="dataLoading"
+          [(ngModel)]="secondTeam" (change)="onChange(2, $event)"></ng-select>
       </div>
       <div class="row">
         <div class="col-3 text-left">
@@ -57,22 +59,26 @@
             <i class="material-icons">home</i>
           </div>
           <div>
-            <a style="color: #f44336;" href="https://www.cbssports.com/nba/injuries" target="_blank"><i class="material-icons">local_hospital</i></a>
+            <a style="color: #f44336;" href="https://www.cbssports.com/nba/injuries" target="_blank"><i
+                class="material-icons">local_hospital</i></a>
           </div>
         </div>
       </div>
     </mat-card>
   </div>
 </div>
-<div id="table-content" style="height: 350px;" class="table-section">
+<div id="table-content" style="height: 340px;" class="table-section">
+  <div>
     <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
     <button mat-raised-button color="primary" (click)="onRemoveSelected()" class="m-2">Remove Selected</button>
-    <button mat-mini-fab color="primary" (click)="getTodaysSchedule()" class="float-right m-2"><i class="material-icons">access_time</i></button>
-    <ag-grid-angular #agGrid class="ag-theme-material ag-grid" 
-        [enableSorting]="true" 
-        [rowData]="matchups"
-        [columnDefs]="columnDefs"
-        [rowSelection]="rowSelection"
-        (gridReady)="onGridReady($event)">
+    <button mat-mini-fab color="primary" (click)="exportTable()" class="schedule-button m-2" *ngIf="rowData.length > 0"><i
+        class="material-icons">save_alt</i></button>
+    <button mat-mini-fab color="primary" (click)="getTodaysSchedule()" class="export-button m-2"><i
+        class="material-icons">access_time</i></button>
+  </div>
+  <div class="table-container">
+    <ag-grid-angular #agGrid class="ag-theme-material ag-grid" [enableSorting]="true" [rowData]="matchups"
+      [columnDefs]="columnDefs" [rowSelection]="rowSelection" (gridReady)="onGridReady($event)">
     </ag-grid-angular>
+  </div>
 </div>

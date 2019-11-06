@@ -4,6 +4,7 @@ import { FormControl } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { ExportService } from 'src/app/services/export.service';
 
 declare var jQuery: any;
 
@@ -37,6 +38,7 @@ export class NbaComponent implements OnInit {
   rightWinner: any;
   loading: any;
   dataLoading = false;
+  rowData = [];
 
   gridApi: any;
   gridColumnApi: any;
@@ -53,8 +55,7 @@ export class NbaComponent implements OnInit {
     {headerName: 'Score', field: 'rightScore'},
     {headerName: 'Team', field: 'rightTeam'},
     {headerName: 'Confidence %', field: 'confidence'},
-    {headerName: 'Game Time', field: 'gameTime'},
-    {headerName: 'Remove', field: 'remove'}
+    {headerName: 'Game Time', field: 'gameTime'}
   ];
 
   matchups = [];
@@ -66,7 +67,8 @@ export class NbaComponent implements OnInit {
   }
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private _exportService: ExportService
     ) {}
 
   ngOnInit() {
@@ -76,8 +78,12 @@ export class NbaComponent implements OnInit {
       this.calculateAverages();
       this.dataLoading = false;
     })
+  }
 
-    console.log(this);
+  exportTable() {
+    this.rowData = [];
+    this.gridApi.forEachNode(node => this.rowData.push(node.data));
+    this._exportService.exportAsExcelFile(this.rowData, "Matchups");
   }
 
   getNbaData(cb) {
@@ -166,6 +172,8 @@ export class NbaComponent implements OnInit {
         scope.addMatchup(matchup[2]);
       });
     }
+    this.rowData = [];
+    this.gridApi.forEachNode(node => this.rowData.push(node.data));
   }
 
   onChange(num, evt){
@@ -201,6 +209,9 @@ export class NbaComponent implements OnInit {
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
+
+    
+    this.gridApi.sizeColumnsToFit();
   }
 
   toggleHomeCourt(side){

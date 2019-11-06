@@ -19,6 +19,7 @@ import { CbbComponent } from './pages/cbb/cbb.component';
 import { HeaderComponent } from './core/header/header.component';
 import { CbbBracketComponent } from './pages/cbb-bracket/cbb-bracket.component';
 import { WcbbComponent } from './pages/wcbb/wcbb.component';
+import { ExportService } from './services/export.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { WcbbComponent } from './pages/wcbb/wcbb.component';
     AgGridModule.withComponents([]),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [],
+  providers: [ExportService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

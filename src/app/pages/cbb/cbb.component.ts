@@ -4,6 +4,7 @@ import { FormControl } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { ExportService } from 'src/app/services/export.service';
 
 declare var jQuery: any;
 
@@ -38,6 +39,7 @@ export class CbbComponent implements OnInit {
   loading: any;
   dataLoading = false;
   neutral = false;
+  rowData = [];
 
   gridApi: any;
   gridColumnApi: any;
@@ -67,11 +69,18 @@ export class CbbComponent implements OnInit {
   }
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private _exportService: ExportService
     ) {}
 
   ngOnInit() {
     this.getCbbData();
+  }
+
+  exportTable() {
+    this.rowData = [];
+    this.gridApi.forEachNode(node => this.rowData.push(node.data));
+    this._exportService.exportAsExcelFile(this.rowData, "Matchups");
   }
 
   getCbbData() {
@@ -111,6 +120,8 @@ export class CbbComponent implements OnInit {
   onRemoveSelected() {
     var selectedData = this.gridApi.getSelectedRows();
     var res = this.gridApi.updateRowData({ remove: selectedData });
+    this.rowData = [];
+    this.gridApi.forEachNode(node => this.rowData.push(node.data));
   }
 
   addMatchup(gameTime) {
@@ -130,6 +141,9 @@ export class CbbComponent implements OnInit {
       matchup.gameTime = gameTime;
     }
     var res = this.gridApi.updateRowData({ add: [matchup] });
+    
+    this.rowData = [];
+    this.gridApi.forEachNode(node => this.rowData.push(node.data));
   }
 
   onGridReady(params) {
