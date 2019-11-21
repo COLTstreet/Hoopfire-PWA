@@ -18,8 +18,8 @@ export class WcbbComponent implements OnInit {
   selected: any;
   currentNav: any;
   cbbTeams: any;
-  avgPos: any;
-  avgOff: any;
+  avgPace: any;
+  avgPPP: any;
   firstTeam: any;
   secondTeam: any;
   homeWinChance: any;
@@ -179,23 +179,23 @@ export class WcbbComponent implements OnInit {
 
   calculateAverages() {
     let scope = this;
-    let avgPosSum = 0;
-    let avgOffSum = 0;
+    let avgPace = 0;
+    let avgPPP = 0;
     scope.cbbTeams.forEach(function (element) {
       if (element.fields.team.stringValue != "Team") {
-        avgPosSum += Number(element.fields.adjT.stringValue);
-        avgOffSum += Number(element.fields.adjO.stringValue);
+        avgPace += Number(element.fields.pace.stringValue);
+        avgPPP += Number(element.fields.oPPP.stringValue);
       }
     });
 
-    this.avgPos = avgPosSum / this.cbbTeams.length;
-    this.avgOff = avgOffSum / this.cbbTeams.length;
+    this.avgPace = avgPace / this.cbbTeams.length;
+    this.avgPPP = avgPPP / this.cbbTeams.length;
   }
 
   calculateOdds() {
     if (this.firstTeam && this.secondTeam) {
       var awayTeam, homeTeam;
-      var adv = .010;
+      var adv = .014;
       if (this.firstHome || this.neutral) {
         homeTeam = this.firstTeam;
         awayTeam = this.secondTeam;
@@ -204,32 +204,38 @@ export class WcbbComponent implements OnInit {
         awayTeam = this.firstTeam;
       }
 
-      var adjHomeOff = Number(homeTeam.fields.adjO.stringValue);
-      var adjHomeDef = Number(homeTeam.fields.adjD.stringValue);
-
-      var adjAwayOff = Number(awayTeam.fields.adjO.stringValue);
-      var adjAwayDef = Number(awayTeam.fields.adjD.stringValue);
-
-      var pythExp = 10.25;
-      var adjHomePyth = Math.pow(adjHomeOff, pythExp) / (Math.pow(adjHomeOff, pythExp) + Math.pow(adjHomeDef, pythExp));
-      var adjAwayPyth = Math.pow(adjAwayOff, pythExp) / (Math.pow(adjAwayOff, pythExp) + Math.pow(adjAwayDef, pythExp));
-
-      var homeWinChance = (adjHomePyth - adjHomePyth * adjAwayPyth) / (adjHomePyth + adjAwayPyth - 2 * adjHomePyth * adjAwayPyth);
-      this.homeWinChance = homeWinChance * 100;
-      this.awayWinChance = (1 - homeWinChance) * 100;
-      this.homeWinChance = this.homeWinChance.toFixed(0);
-      this.awayWinChance = this.awayWinChance.toFixed(0);
-
-      var adjPos = ((awayTeam.fields.adjT.stringValue / this.avgPos) * (homeTeam.fields.adjT.stringValue / this.avgPos)) * this.avgPos;
-
-      var awayScoreDecimal = (((adjAwayOff / this.avgOff) * (adjHomeDef / this.avgOff)) * (this.avgOff) * (adjPos / 100));
-      this.awayScore = Number(awayScoreDecimal.toFixed(0));
-      var homeScoreDecimal = (((adjHomeOff / this.avgOff) * (adjAwayDef / this.avgOff)) * (this.avgOff) * (adjPos / 100));
-
       if(!this.neutral) {
-        homeScoreDecimal = homeScoreDecimal + 3.2;
+        adv = 0;
       }
 
+      var homeOPPP = Number(homeTeam.fields.oPPP.stringValue);
+      var homeDPPP = Number(homeTeam.fields.dPPP.stringValue);
+
+      var awayOPPP = Number(awayTeam.fields.oPPP.stringValue);
+      var awayDPPP = Number(awayTeam.fields.dPPP.stringValue);
+
+      var adjHomeOff = homeOPPP + (adv * homeOPPP);
+      var adjAwayOff = awayOPPP - (adv * awayOPPP);
+
+      var adjHomeDef = homeDPPP - (adv * homeDPPP);
+      var adjAwayDef = awayDPPP + (adv * awayDPPP);
+
+      var adjPace =  Number(homeTeam.fields.pace.stringValue) *  Number(awayTeam.fields.pace.stringValue) / this.avgPace;
+
+      var homePPP = adjHomeOff * adjAwayDef / this.avgPPP;
+      var awayPPP = adjAwayOff * adjHomeDef / this.avgPPP;
+
+      var homeScoreDecimal = homePPP * adjPace / 100;
+      var awayScoreDecimal = awayPPP * adjPace / 100;
+
+      // var homeWinChance = (adjHomePyth - adjHomePyth * adjAwayPyth) / (adjHomePyth + adjAwayPyth - 2 * adjHomePyth * adjAwayPyth);
+      // this.homeWinChance = homeWinChance * 100;
+      // this.awayWinChance = (1 - homeWinChance) * 100;
+
+      // this.homeWinChance = this.homeWinChance.toFixed(0);
+      // this.awayWinChance = this.awayWinChance.toFixed(0);
+
+      this.awayScore = Number(awayScoreDecimal.toFixed(0));
       this.homeScore = Number(homeScoreDecimal.toFixed(0));
 
       var decSpread = Math.abs(homeScoreDecimal - (awayScoreDecimal));
@@ -237,11 +243,11 @@ export class WcbbComponent implements OnInit {
       if (homeScoreDecimal > awayScoreDecimal) {
         this.spread = "-" + (Math.round(decSpread * 2) / 2).toFixed(1);
         this.winner = homeTeam;
-        this.confidenceScore = this.homeWinChance;
+        // this.confidenceScore = this.homeWinChance;
       } else {
         this.spread = "-" + (Math.round(decSpread * 2) / 2).toFixed(1);
         this.winner = awayTeam;
-        this.confidenceScore = this.awayWinChance;
+        // this.confidenceScore = this.awayWinChance;
       }
 
       if (this.firstHome || this.neutral) {
