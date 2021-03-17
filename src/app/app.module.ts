@@ -20,6 +20,7 @@ import { HeaderComponent } from './core/header/header.component';
 import { CbbBracketComponent } from './pages/cbb-bracket/cbb-bracket.component';
 import { WcbbComponent } from './pages/wcbb/wcbb.component';
 import { ExportService } from './services/export.service';
+import { WcbbBracketComponent } from './pages/wcbb-bracket/wcbb-bracket.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ExportService } from './services/export.service';
     CbbComponent,
     HeaderComponent,
     CbbBracketComponent,
-    WcbbComponent
+    WcbbComponent,
+    WcbbBracketComponent
   ],
   imports: [
     BrowserModule,
