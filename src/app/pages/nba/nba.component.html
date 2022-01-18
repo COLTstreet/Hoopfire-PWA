@@ -73,8 +73,8 @@
     <button mat-raised-button color="primary" (click)="onRemoveSelected()" class="m-2">Remove Selected</button>
     <button mat-mini-fab color="primary" (click)="exportTable()" class="schedule-button m-2" *ngIf="rowData.length > 0"><i
         class="material-icons">save_alt</i></button>
-    <button mat-mini-fab color="primary" (click)="getTodaysSchedule()" class="export-button m-2"><i
-        class="material-icons">access_time</i></button>
+    <!-- <button mat-mini-fab color="primary" (click)="getTodaysSchedule()" class="export-button m-2"><i
+        class="material-icons">access_time</i></button> -->
   </div>
   <div class="table-container">
     <ag-grid-angular #agGrid class="ag-theme-material ag-grid" [enableSorting]="true" [rowData]="matchups"
