@@ -1,0 +1,30 @@
+.bg-container {
+  background-image: url("/assets/home-bk-2.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: -1;
+}
+
+.home-text {
+  font-size: 3.25rem;
+  color: white;
+  font-weight: bold;
+  font-family: 'Rock Salt', cursive;
+  padding-top: 10%;
+  overflow-wrap: break-word;
+}
+
+.get-started-button-container {
+  text-align: center;
+  padding-top: 10%;
+}
+
+.get-started-button {
+  width: 50%;
+  text-transform: uppercase;
+  color: white !important;
+}

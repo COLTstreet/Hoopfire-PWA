@@ -1,1 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+@use "@angular/material"as mat;
+
+@include mat.core();
+
+$hoopfire-app-primary: mat.define-palette(mat.$orange-palette);
+$hoopfire-app-accent: mat.define-palette(mat.$green-palette, A200, A100, A400);
+$hoopfire-app-warn: mat.define-palette(mat.$red-palette);
+
+$hoopfire-app-theme: mat.define-dark-theme((color: (primary: $hoopfire-app-primary,
+      accent: $hoopfire-app-accent,
+      warn: $hoopfire-app-warn,
+    ),
+  ));
+
+@include mat.all-component-themes($hoopfire-app-theme);
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
