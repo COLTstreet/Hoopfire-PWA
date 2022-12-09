@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/hoopfire",
+    "public": "dist",
     "ignore": [
       "firebase.json",
       "**/.*",
