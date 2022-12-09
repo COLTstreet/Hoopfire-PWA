@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { Platform } from '@angular/cdk/platform';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { filter, map } from 'rxjs/operators';
 import { DataService } from './services/data.service';
+
+declare const gtag: Function;
 
 @Component({
   selector: 'app-root',
@@ -16,9 +19,15 @@ export class AppComponent implements OnInit {
 
   constructor(private platform: Platform,
               private swUpdate: SwUpdate,
+              public router: Router,
               public _dataService: DataService) {
     this._dataService.isOnline = false;
     this._dataService.modalVersion = false;
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        gtag('config', 'G-1MM9P0LK0F', { 'page_path': event.urlAfterRedirects });
+      }      
+    })
   }
 
   public ngOnInit(): void {

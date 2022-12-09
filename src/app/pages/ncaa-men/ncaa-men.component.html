@@ -1,2 +1,124 @@
 <app-toolbar></app-toolbar>
-<p>ncaa-men works!</p>
+<div class="container-fluid">
+  <div class="row" style="background-color: #424242">
+    <div class="col-6">
+      <button mat-icon-button color="accent" class="todays-games-icon" matTooltip="Today's Games"
+        (click)="calculateTodaysGames()">
+        <mat-icon>today</mat-icon>
+      </button>
+    </div>
+    <div class="col-6 d-flex justify-content-end">
+      <button mat-icon-button color="accent" matTooltip="Clear All Games" (click)="clearAllGames()">
+        <mat-icon>settings_backup_restore</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-5">
+      <mat-card class="mt-1 team-card">
+        <div *ngIf="leftWinner" class="left-winner"><i class="material-icons">check_circle</i></div>
+
+        <form>
+          <mat-form-field class="w-100" color="primary">
+            <mat-label>Select a Team</mat-label>
+            <input type="text" matInput [formControl]="teamOneControl" [matAutocomplete]="autoOne"
+              [(ngModel)]="selectedHomeTeam">
+            <mat-autocomplete #autoOne="matAutocomplete" [displayWith]="displayTeamNameFn"
+              (optionSelected)="setSelectedHomeTeam()">
+              <mat-option *ngFor="let team of filteredTeamsListOne | async" [value]="team">
+                {{team.School}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
+
+        <div class="row" *ngIf="selectedHomeTeam">
+          <div class="col-4">
+            <img class="team-logo" src="{{selectedHomeTeam.TeamLogoUrl}}" />
+          </div>
+          <div class="col-4 twelve-font">
+            <div>{{selectedHomeTeam.Conference}}</div>
+            <div>Record: ({{selectedHomeInfo.Wins}}-{{selectedHomeInfo.Losses}})</div>
+            <div>PPG: {{homeTeamPPG}}</div>
+            <div>
+              <div id="homeLeft" class="home-icon home-icon-color" matTooltip="Home Court Adv" (click)="toggleHomeCourt('left');">
+                <i class="material-icons">home</i>
+              </div>
+              <button mat-icon-button color="accent" matTooltip="Injuries" (click)="showTeamInjuries(1)">
+                <mat-icon>local_hospital</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div class="col-4 d-flex justify-content-center align-items-center">
+            <div class="predicted-score">{{leftScore}}</div>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div class="col-xs-12 col-md-2 text-center p-2">
+      <div class="d-flex justify-content-center align-items-center h-100">
+        <div>
+          <div class="">Spread: {{spread}}</div>
+          <div class="">Confidence: {{confidenceScore}}%</div>
+          <button mat-mini-fab color="primary" matTooltip="Add Matchup to Table" (click)="addMatchup('User Generated')"><i
+              class="material-icons">add</i></button>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-5">
+      <mat-card class="mt-1 team-card">
+        <div *ngIf="rightWinner" class="right-winner"><i class="material-icons">check_circle</i></div>
+
+        <form>
+          <mat-form-field class="w-100" color="primary">
+            <mat-label>Select a Team</mat-label>
+            <input type="text" matInput [formControl]="teamTwoControl" [matAutocomplete]="autoTwo"
+              [(ngModel)]="selectedAwayTeam">
+            <mat-autocomplete #autoTwo="matAutocomplete" [displayWith]="displayTeamNameFn"
+              (optionSelected)="setSelectedAwayTeam()">
+              <mat-option *ngFor="let team of filteredTeamsListTwo | async" [value]="team">
+                {{team.School}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
+
+        <div class="row" *ngIf="selectedAwayTeam">
+          <div class="col-4 d-flex justify-content-center align-items-center">
+            <div class="predicted-score">{{rightScore}}</div>
+          </div>
+          <div class="col-4 twelve-font">
+            <div>{{selectedAwayTeam.Conference}}</div>
+            <div>Record: ({{selectedAwayInfo.Wins}}-{{selectedAwayInfo.Losses}})</div>
+            <div>PPG: {{awayTeamPPG}}</div>
+            <div>
+              <div id="homeRight" class="home-icon" matTooltip="Home Court Adv" (click)="toggleHomeCourt('right');">
+                <i class="material-icons">home</i>
+              </div>
+              <button mat-icon-button matTooltip="Injuries" color="accent" (click)="showTeamInjuries(2)">
+                <mat-icon>local_hospital</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div class="col-4">
+            <img class="team-logo" src="{{selectedAwayTeam.TeamLogoUrl}}" />
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  <div class="row pt-2">
+    <div class="col-12">
+      <button mat-icon-button color="accent" matTooltip="Export Table" (click)="onBtnExport()" class="float-end">
+        <mat-icon>ios_share</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" matTooltip="Delete Selected Rows" (click)="deleteSelectedRows()">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <ag-grid-angular #agGrid style="width: 100%; height: 350px;" class="ag-theme-alpine" [rowData]="matchups"
+        [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowSelection]="rowSelection"
+        (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+    </div>
+  </div>
+</div>

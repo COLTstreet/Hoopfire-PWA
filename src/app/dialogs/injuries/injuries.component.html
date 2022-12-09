@@ -1,0 +1,80 @@
+<div *ngIf="data && data.type === 'NBA' && data.injuries.length > 0">
+  <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig" (init)="slickInit($event)"
+    (breakpoint)="breakpoint($event)" (afterChange)="afterChange($event)" (beforeChange)="beforeChange($event)">
+    <div ngxSlickItem *ngFor="let player of data.injuries" class="slide">
+      <div>
+        <div class="profile-card-4 text-center"><img src="{{player.PhotoUrl}}" class="img img-responsive"
+            [ngStyle]="data.primaryColor ? {'background-color': '#' + data.primaryColor} : {}">
+          <div class="profile-content">
+            <div class="profile-name">
+              <span style="padding-right: 5px;">#{{player.Jersey}}</span>{{player.FanDuelName}}
+              <p>{{player.Position}}</p>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="row">
+              <div class="col-4">
+                <div class="profile-overview">
+                  <p>College</p>
+                  <h5>{{player.College}}</h5>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="profile-overview">
+                  <p>Height</p>
+                  <h5>{{getHeightFormatted(player)}}</h5>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="profile-overview">
+                  <p>Weight</p>
+                  <h5>{{player.Weight}}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ngx-slick-carousel>
+</div>
+<div *ngIf="data && data.type === 'NCAAM' && data.injuries.length > 0">
+  <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig" (init)="slickInit($event)"
+    (breakpoint)="breakpoint($event)" (afterChange)="afterChange($event)" (beforeChange)="beforeChange($event)">
+    <div ngxSlickItem *ngFor="let player of data.injuries" class="slide">
+      <div>
+        <div class="profile-card-4 text-center">
+          <div>
+            <div class="text-dark pt-4">
+              <span style="padding-right: 5px;">#{{player.Jersey}}</span>{{player.FirstName}} {{player.LastName}}
+              <p>{{player.Position}}</p>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="row">
+              <div class="col-4">
+                <div class="profile-overview">
+                  <p>High School</p>
+                  <h5>{{player.HighSchool}}</h5>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="profile-overview">
+                  <p>Height</p>
+                  <h5>{{getHeightFormatted(player)}}</h5>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="profile-overview">
+                  <p>Weight</p>
+                  <h5>{{player.Weight}}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ngx-slick-carousel>
+</div>
+<div *ngIf="data && data.injuries.length == 0" class="text-center">
+  No Injuries Reported
+</div>

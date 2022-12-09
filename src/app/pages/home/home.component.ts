@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    
+    document.body.style.backgroundColor = "none"
   }
 
 }
