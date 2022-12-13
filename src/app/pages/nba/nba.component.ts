@@ -302,7 +302,7 @@ export class NbaComponent implements OnInit {
   calculateOdds() {
     if (this.firstTeam && this.secondTeam) {
       var awayTeam, homeTeam;
-      var adv = .010;
+      var adv = .007;
       if (this.firstHome) {
         homeTeam = this.firstTeam;
         awayTeam = this.secondTeam;
