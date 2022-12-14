@@ -1,5 +1,5 @@
 .home-splash {
-  width: 50%;
+  width: 35%;
 }
 
 .get-started-button-container {
@@ -12,16 +12,11 @@
   color: white !important;
 }
 
-#homeVideo {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-  object-fit: cover;
-  z-index: -1;
+.home-bk {
+  background-size: cover !important;
+  background-position: center;
+  background: url(/assets/home-bk.jpg);
+  background-repeat: no-repeat;
 }
 
 @media only screen and (max-width: 600px) {
