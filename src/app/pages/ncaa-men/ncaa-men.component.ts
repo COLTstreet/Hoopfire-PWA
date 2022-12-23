@@ -188,8 +188,8 @@ export class NcaaMenComponent implements OnInit {
   }
 
   setSelectedHomeTeam() {
-    this.selectedHomeTeamStats = this.statsData.filter((tm: any) => tm.id.toLowerCase().includes(this.selectedHomeTeam.School.toLowerCase()))[0]
-    this.selectedHomeInfo = this.allTeamSeasonStats.filter((tm: any) => tm.Name.toLowerCase().includes(this.selectedHomeTeam.School.toLowerCase().toLowerCase()))[0]
+    this.selectedHomeTeamStats = this.statsData.filter((tm: any) => tm.id.toLowerCase().includes(this.selectedHomeTeam.School.toLowerCase()) && tm.winLoss.split('-')[0] == this.selectedHomeTeam.Wins && tm.winLoss.split('-')[1] == this.selectedHomeTeam.Losses)[0]
+    this.selectedHomeInfo = this.allTeamSeasonStats.filter((tm: any) => tm.Name.toLowerCase().includes(this.selectedHomeTeam.School.toLowerCase().toLowerCase())  && tm.Wins == this.selectedHomeTeam.Wins && tm.Losses == this.selectedHomeTeam.Losses)[0]
 
     this.homeTeamPPG = (this.selectedHomeInfo.Points / (this.selectedHomeInfo.Wins + this.selectedHomeInfo.Losses)).toFixed(1)
 
@@ -200,8 +200,8 @@ export class NcaaMenComponent implements OnInit {
   }
 
   setSelectedAwayTeam() {
-    this.selectedAwayTeamStats = this.statsData.filter((tm: any) => tm.id.toLowerCase().includes(this.selectedAwayTeam.School.toLowerCase()))[0]
-    this.selectedAwayInfo = this.allTeamSeasonStats.filter((tm: any) => tm.Name.toLowerCase().includes(this.selectedAwayTeam.School.toLowerCase().toLowerCase()))[0]
+    this.selectedAwayTeamStats = this.statsData.filter((tm: any) => tm.id.toLowerCase().includes(this.selectedAwayTeam.School.toLowerCase()) && tm.winLoss.split('-')[0] == this.selectedAwayTeam.Wins && tm.winLoss.split('-')[1] == this.selectedAwayTeam.Losses)[0]
+    this.selectedAwayInfo = this.allTeamSeasonStats.filter((tm: any) => tm.Name.toLowerCase().includes(this.selectedAwayTeam.School.toLowerCase().toLowerCase())  && tm.Wins == this.selectedAwayTeam.Wins && tm.Losses == this.selectedAwayTeam.Losses)[0]
 
     this.awayTeamPPG = (this.selectedAwayInfo.Points / (this.selectedAwayInfo.Wins + this.selectedAwayInfo.Losses)).toFixed(1)
 
