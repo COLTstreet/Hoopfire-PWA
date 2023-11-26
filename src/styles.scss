@@ -1,0 +1,79 @@
+@use "@angular/material" as mat;
+
+
+@include mat.core();
+
+$hoopfire-app-primary: mat.define-palette(mat.$orange-palette);
+$hoopfire-app-accent: mat.define-palette(mat.$indigo-palette, A200, A100, A400);
+$hoopfire-app-warn: mat.define-palette(mat.$red-palette);
+
+$hoopfire-app-theme: mat.define-dark-theme((color: (primary: $hoopfire-app-primary,
+      accent: $hoopfire-app-accent,
+      warn: $hoopfire-app-warn,
+    ),
+  ));
+
+@include mat.all-component-themes($hoopfire-app-theme);
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 16px !important;
+}
+
+.container-height {
+  height: calc(100% - 64px);
+}
+
+//-------------------------------------- COMMON STYLES
+.team-logo {
+  height: 100%;
+  width: 100%;
+}
+
+.team-card {
+  height: 100%;
+}
+
+.predicted-score {
+  font-size: 4rem;
+}
+
+.twelve-font {
+  font-size: 12px;
+}
+
+.left-winner {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  color: #4CAF50;
+}
+
+.right-winner {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  color: #4CAF50;
+}
+
+.home-icon {
+  float: left;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.home-icon-color {
+  color: green !important;
+}
+
+//------------------------------- AG GRID
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-alpine.css';

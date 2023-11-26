@@ -1,0 +1,32 @@
+.home-splash {
+  width: 35%;
+}
+
+.get-started-button-container {
+  text-align: center;
+}
+
+.get-started-button {
+  width: 50%;
+  text-transform: uppercase;
+  color: white !important;
+}
+
+.home-bk {
+  background-size: cover !important;
+  background-position: center;
+  background: url(/assets/home-bk.jpg);
+  background-repeat: no-repeat;
+}
+
+@media only screen and (max-width: 600px) {
+  .home-splash {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .home-splash {
+    width: 75%;
+  }
+}
